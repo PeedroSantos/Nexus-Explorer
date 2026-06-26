@@ -1,23 +1,33 @@
+import { useState } from 'react'
+import { planets, planetTypes } from '../../data/planets'
+import PlanetSearch from '../../components/PlanetSearch/PlanetSearch'
+import PlanetFilter from '../../components/PlanetFilter/PlanetFilter'
+import PlanetGrid from '../../components/PlanetGrid/PlanetGrid'
+import PlanetViewer from '../../components/PlanetViewer/PlanetViewer'
 import styles from './Explore.module.css'
 
 /*
-  Página de Exploração — Catálogo de Planetas.
+  Página de Exploração — Catálogo Planetário.
 
-  INTEGRAÇÃO FUTURA:
-  Este arquivo está pronto para receber:
-  - Dados mockados de planetas (via props ou arquivo de dados)
-  - Componente PlanetCard (com props desestruturadas)
-  - Componente FilterBar (Lift State Up: estado de filtro aqui)
-  - Renderização dinâmica com .map() sobre o array de planetas
-  - Renderização condicional para "nenhum resultado encontrado"
+  Lift State Up: o termo de busca e o tipo ativo são
+  gerenciados aqui e passados via props para PlanetSearch,
+  PlanetFilter e PlanetGrid. A lista visível é derivada
+  desses estados (busca por nome + filtro por tipo).
 
-  Exemplo de estrutura de dados esperada (mock):
-  const planets = [
-    { id: 'kepler-22b', name: 'Kepler-22B', type: 'Oceânico', ... },
-    ...
-  ]
+  A Mesa Holográfica Interativa (PlanetViewer) reaproveita
+  os mesmos dados mockados para projetar os planetas.
 */
 function Explore() {
+  const [query, setQuery]           = useState('')
+  const [activeType, setActiveType] = useState('Todos')
+
+  // Lista derivada: aplica filtro por tipo e busca por nome.
+  const visiblePlanets = planets.filter(planet => {
+    const matchesType = activeType === 'Todos' || planet.type === activeType
+    const matchesName = planet.name.toLowerCase().includes(query.trim().toLowerCase())
+    return matchesType && matchesName
+  })
+
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
@@ -35,36 +45,38 @@ function Explore() {
           </p>
         </header>
 
-        {/* Linha decorativa */}
         <div className={styles.divider} aria-hidden="true" />
 
-        {/* ── ÁREA DE FILTROS ─────────────────────────────────────
-            Substitua este bloco pelo componente <FilterBar />
-            O estado de filtro ativo deve ser gerenciado aqui (Lift State Up)
-            e passado via props para FilterBar e para a grade de planetas.
-        ──────────────────────────────────────────────────────── */}
-        <div className={styles.filterPlaceholder}>
-          <p className={styles.placeholderLabel}>[ Área reservada para FilterBar ]</p>
-          <p className={styles.placeholderNote}>
-            Componente de filtros será integrado aqui.
-            Gerenciar estado de filtro ativo nesta página (Lift State Up).
-          </p>
+        {/* ── BUSCA E FILTROS ─────────────────────────────────────
+            Estado gerenciado nesta página (Lift State Up). */}
+        <div className={styles.controls}>
+          <PlanetSearch value={query} onChange={setQuery} />
+          <PlanetFilter
+            types={planetTypes}
+            activeType={activeType}
+            onChange={setActiveType}
+          />
         </div>
 
-        {/* ── GRADE DE PLANETAS ────────────────────────────────────
-            Substitua este bloco pelo mapeamento dos dados mockados:
-            {planets.map(planet => (
-              <PlanetCard key={planet.id} planet={planet} />
-            ))}
-        ──────────────────────────────────────────────────────── */}
-        <section className={styles.grid} aria-label="Grade de planetas">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className={styles.cardPlaceholder}>
-              <div className={styles.cardPlaceholderIcon} aria-hidden="true">◉</div>
-              <p className={styles.cardPlaceholderText}>Planeta {String(i + 1).padStart(2, '0')}</p>
-              <p className={styles.cardPlaceholderNote}>PlanetCard aqui</p>
-            </div>
-          ))}
+        {/* Contador de resultados */}
+        <p className={styles.resultCount}>
+          {visiblePlanets.length} {visiblePlanets.length === 1 ? 'planeta' : 'planetas'} encontrados
+        </p>
+
+        {/* ── GRADE DE PLANETAS ───────────────────────────────── */}
+        <PlanetGrid planets={visiblePlanets} />
+
+        {/* ── MESA HOLOGRÁFICA INTERATIVA ─────────────────────────
+            Componente criativo principal. Reaproveita o catálogo
+            completo para projetar os planetas. */}
+        <section className={styles.hologramSection} aria-label="Mesa Holográfica Interativa">
+          <div className={styles.sectionHead}>
+            <h2 className={styles.sectionTitle}>Mesa Holográfica</h2>
+            <p className={styles.sectionSubtitle}>
+              Projete qualquer mundo do catálogo e inspecione seus dados em tempo real.
+            </p>
+          </div>
+          <PlanetViewer planets={planets} />
         </section>
 
       </div>

@@ -59,75 +59,44 @@
   margin-bottom: var(--space-8);
 }
 
-/* ─── Placeholder de filtros ─────────────────── */
-.filterPlaceholder {
-  padding: var(--space-6);
-  border: 1px dashed rgba(0, 212, 255, 0.2);
-  border-radius: var(--radius-md);
-  background: rgba(0, 212, 255, 0.02);
-  margin-bottom: var(--space-8);
-  text-align: center;
+/* ─── Controles (busca + filtros) ────────────── */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
-.placeholderLabel {
+.resultCount {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--color-cyan);
-  opacity: 0.6;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-6) 0;
+}
+
+/* ─── Seção da Mesa Holográfica ──────────────── */
+.hologramSection {
+  margin-top: var(--space-20);
+}
+
+.sectionHead {
+  margin-bottom: var(--space-8);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
   margin: 0 0 var(--space-2) 0;
 }
 
-.placeholderNote {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* ─── Grade de planetas ──────────────────────── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--space-6);
-}
-
-/* ─── Placeholder de card ────────────────────── */
-.cardPlaceholder {
-  aspect-ratio: 3 / 4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-  background: var(--color-bg-card);
-  border: 1px dashed rgba(123, 47, 255, 0.25);
-  border-radius: var(--radius-lg);
-  transition: border-color var(--transition-fast);
-}
-
-.cardPlaceholder:hover {
-  border-color: rgba(123, 47, 255, 0.5);
-}
-
-.cardPlaceholderIcon {
-  font-size: 2rem;
-  color: var(--color-purple);
-  opacity: 0.4;
-}
-
-.cardPlaceholderText {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+.sectionSubtitle {
+  font-size: 0.95rem;
   color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.cardPlaceholderNote {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
   margin: 0;
 }
