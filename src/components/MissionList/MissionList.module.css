@@ -1,0 +1,44 @@
+/* =============================================
+   MissionList.module.css — grade de missões
+   ============================================= */
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-5);
+  align-items: stretch;
+}
+
+/* ─── Estado vazio ───────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  border: 1px dashed rgba(123, 47, 255, 0.25);
+  border-radius: var(--radius-lg);
+  background: rgba(123, 47, 255, 0.02);
+}
+
+.emptyIcon {
+  font-size: 2.6rem;
+  color: var(--color-violet);
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.emptyNote {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}

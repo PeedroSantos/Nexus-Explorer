@@ -1,30 +1,33 @@
 import { useState } from 'react'
+import { planets, planetTypes } from '../../data/planets'
+import AtlasFilter from '../../components/AtlasFilter/AtlasFilter'
+import AtlasCard from '../../components/AtlasCard/AtlasCard'
 import styles from './Atlas.module.css'
 
 /*
-  Página Atlas Estelar — Mapa Galáctico.
+  Página Atlas Estelar — catálogo completo de planetas.
 
-  INTEGRAÇÃO FUTURA:
-  Esta página está pronta para receber:
-  - Componente de mapa interativo (StarMap)
-  - Grade de sistemas estelares com dados mockados
-  - Componente criativo holográfico (HolographicGlobe / StarChart)
-  - Renderização condicional para sistema selecionado
-  - Lift State Up: selectedSystem gerenciado aqui e passado via props
+  Reaproveita o mesmo mock compartilhado (`planets.js`, Pessoa 1).
 
-  DADOS MOCKADOS esperados (exemplo):
-    const stellarSystems = [
-      { id: 'nx-01', name: 'Sistema Auris', planets: 4, x: 120, y: 80, ... },
-      ...
-    ]
+  Lift State Up: a categoria ativa e o termo de pesquisa vivem
+  aqui e são passados via props para o AtlasFilter. A lista
+  visível é derivada desses estados:
+  - filtro por categoria (tipo de planeta)
+  - pesquisa por nome OU tipo
 */
-
-/* Regiões do mapa para os tabs de navegação */
-const MAP_REGIONS = ['Quadrante Alpha', 'Quadrante Beta', 'Quadrante Gama', 'Zona Nebular']
-
 function Atlas() {
-  // Lift State Up: região selecionada gerenciada aqui
-  const [activeRegion, setActiveRegion] = useState('Quadrante Alpha')
+  const [query, setQuery]           = useState('')
+  const [activeType, setActiveType] = useState('Todos')
+
+  // Lista derivada: categoria + pesquisa (nome ou tipo).
+  const visiblePlanets = planets.filter(planet => {
+    const matchesType = activeType === 'Todos' || planet.type === activeType
+    const term = query.trim().toLowerCase()
+    const matchesSearch =
+      planet.name.toLowerCase().includes(term) ||
+      planet.type.toLowerCase().includes(term)
+    return matchesType && matchesSearch
+  })
 
   return (
     <div className={styles.page}>
@@ -39,92 +42,43 @@ function Atlas() {
           </p>
           <h1 className={styles.title}>Atlas Estelar</h1>
           <p className={styles.subtitle}>
-            Cartografia completa da galáxia Nexus — sistemas, constelações e rotas de exploração.
+            Catálogo completo dos mundos mapeados pela frota de exploração Nexus.
           </p>
         </header>
 
         <div className={styles.divider} aria-hidden="true" />
 
-        {/* ── TABS DE REGIÕES ───────────────────────────────────────
-            Lift State Up: activeRegion é gerenciado nesta página.
-            Passe activeRegion para o componente de mapa.
-        ──────────────────────────────────────────────────────── */}
-        <div
-          className={styles.regionTabs}
-          role="tablist"
-          aria-label="Selecionar região do mapa"
-        >
-          {MAP_REGIONS.map(region => (
-            <button
-              key={region}
-              role="tab"
-              aria-selected={activeRegion === region}
-              className={`${styles.regionTab} ${activeRegion === region ? styles.regionTabActive : ''}`}
-              onClick={() => setActiveRegion(region)}
-            >
-              {region}
-            </button>
-          ))}
-        </div>
+        {/* Controles: pesquisa + categorias (Lift State Up) */}
+        <AtlasFilter
+          types={planetTypes}
+          activeType={activeType}
+          onTypeChange={setActiveType}
+          query={query}
+          onQueryChange={setQuery}
+        />
 
-        {/* ── MAPA ESTELAR ─────────────────────────────────────────
-            Substitua este bloco pelo componente <StarMap /> ou
-            pelo componente criativo holográfico do grupo.
-            Passe activeRegion como prop para filtrar o conteúdo.
-        ──────────────────────────────────────────────────────── */}
-        <div
-          className={styles.mapArea}
-          role="tabpanel"
-          aria-label={`Mapa do ${activeRegion}`}
-        >
-          {/* Estrelas decorativas do mapa */}
-          <div className={styles.mapCanvas} aria-hidden="true">
-            {Array.from({ length: 40 }).map((_, i) => (
-              <div
-                key={i}
-                className={styles.mapStar}
-                style={{
-                  left:   `${5 + Math.random() * 90}%`,
-                  top:    `${5 + Math.random() * 90}%`,
-                  width:  `${1 + Math.random() * 3}px`,
-                  height: `${1 + Math.random() * 3}px`,
-                  animationDelay: `${Math.random() * 3}s`,
-                }}
-              />
-            ))}
-          </div>
+        {/* Contador de resultados */}
+        <p className={styles.resultCount}>
+          {visiblePlanets.length}{' '}
+          {visiblePlanets.length === 1 ? 'planeta catalogado' : 'planetas catalogados'}
+        </p>
 
-          <div className={styles.mapPlaceholder}>
-            <span className={styles.mapIcon} aria-hidden="true">◈</span>
-            <p className={styles.mapRegionLabel}>{activeRegion}</p>
-            <p className={styles.mapNote}>Componente de mapa estelar aqui</p>
-            <p className={styles.mapSub}>
-              StarMap / HolographicGlobe / componente criativo
+        {/* Listagem dinâmica — renderização condicional para vazio */}
+        {visiblePlanets.length === 0 ? (
+          <div className={styles.empty} role="status">
+            <span className={styles.emptyIcon} aria-hidden="true">◌</span>
+            <p className={styles.emptyTitle}>Nenhum planeta encontrado</p>
+            <p className={styles.emptyNote}>
+              Ajuste a pesquisa ou a categoria para continuar a exploração.
             </p>
           </div>
-        </div>
-
-        {/* ── CATÁLOGO DE SISTEMAS ─────────────────────────────────
-            Grade de sistemas do quadrante ativo.
-            Substitua pelos dados mockados e componentes reais.
-        ──────────────────────────────────────────────────────── */}
-        <section className={styles.systemsSection} aria-label="Sistemas estelares do quadrante">
-          <h2 className={styles.systemsTitle}>
-            Sistemas em <span className={styles.regionHighlight}>{activeRegion}</span>
-          </h2>
-          <div className={styles.systemsGrid}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className={styles.systemCard}>
-                <div className={styles.systemDot} aria-hidden="true" />
-                <div className={styles.systemInfo}>
-                  <span className={styles.systemName}>Sistema NX-{String(i + 1).padStart(3, '0')}</span>
-                  <span className={styles.systemPlanets}>--- planetas</span>
-                </div>
-                <span className={styles.systemTag}>---</span>
-              </div>
+        ) : (
+          <section className={styles.grid} aria-label="Catálogo de planetas">
+            {visiblePlanets.map(planet => (
+              <AtlasCard key={planet.id} planet={planet} />
             ))}
-          </div>
-        </section>
+          </section>
+        )}
 
       </div>
     </div>

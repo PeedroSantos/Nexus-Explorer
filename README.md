@@ -8,10 +8,9 @@
 
 | Nome | RA |
 |------|----|
-| (Nome do integrante 1) | (RA) |
-| (Nome do integrante 2) | (RA) |
-| (Nome do integrante 3) | (RA) |
-| (Nome do integrante 4) | (RA) |
+| Luan Gonzaga Oliveira | 5168164 |
+| Pedro Evangelista Santos | 5168181 |
+| Diego Mendes Santos | 5168179 |
 
 ---
 

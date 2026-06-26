@@ -59,207 +59,53 @@
   margin-bottom: var(--space-8);
 }
 
-/* ─── Tabs de região ─────────────────────────── */
-.regionTabs {
-  display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-6);
-}
-
-.regionTab {
-  padding: var(--space-2) var(--space-5);
+/* ─── Contador de resultados ─────────────────── */
+.resultCount {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  color: var(--color-text-secondary);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-6) 0;
 }
 
-.regionTab:hover {
-  color: var(--color-text-primary);
-  border-color: var(--color-border-hover);
+/* ─── Grade de planetas ──────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6);
 }
 
-.regionTabActive {
-  color: var(--color-violet);
-  border-color: var(--color-purple);
-  background: var(--color-purple-dim);
-  box-shadow: 0 0 12px rgba(123, 47, 255, 0.1);
-}
-
-/* ─── Área do mapa ───────────────────────────── */
-.mapArea {
-  position: relative;
-  height: 420px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  margin-bottom: var(--space-10);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Canvas de estrelas de fundo */
-.mapCanvas {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.mapStar {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  animation: twinkle 3s ease-in-out infinite;
-  opacity: 0.4;
-}
-
-/* Conteúdo placeholder do mapa */
-.mapPlaceholder {
-  position: relative;
-  z-index: 1;
+/* ─── Estado vazio ───────────────────────────── */
+.empty {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
   text-align: center;
-  padding: var(--space-8);
+  padding: var(--space-16) var(--space-6);
+  border: 1px dashed rgba(168, 85, 247, 0.25);
+  border-radius: var(--radius-lg);
+  background: rgba(168, 85, 247, 0.02);
 }
 
-.mapIcon {
-  font-size: 3rem;
-  color: var(--color-cyan);
-  filter: drop-shadow(0 0 16px var(--color-cyan));
-  opacity: 0.4;
+.emptyIcon {
+  font-size: 2.6rem;
+  color: var(--color-violet);
+  opacity: 0.5;
 }
 
-.mapRegionLabel {
+.emptyTitle {
   font-family: var(--font-display);
   font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--color-violet);
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
-.mapNote {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--color-cyan);
-  opacity: 0.5;
-  margin: 0;
-}
-
-.mapSub {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
+.emptyNote {
+  font-size: 0.85rem;
   color: var(--color-text-muted);
   margin: 0;
-}
-
-/* ─── Seção de sistemas ──────────────────────── */
-.systemsSection {}
-
-.systemsTitle {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  margin: 0 0 var(--space-5) 0;
-}
-
-.regionHighlight {
-  color: var(--color-violet);
-}
-
-.systemsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.systemCard {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  transition: border-color var(--transition-fast), background var(--transition-fast);
-}
-
-.systemCard:hover {
-  border-color: rgba(168, 85, 247, 0.4);
-  background: var(--color-bg-elevated);
-}
-
-.systemDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--color-violet) 0%, var(--color-purple) 100%);
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
-  flex-shrink: 0;
-}
-
-.systemInfo {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.systemName {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  color: var(--color-text-secondary);
-}
-
-.systemPlanets {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}
-
-.systemTag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  padding: var(--space-1) var(--space-3);
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
-}
-
-/* ─── Animações ──────────────────────────────── */
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; }
-  50%       { opacity: 0.8; }
-}
-
-/* ─── Responsividade ─────────────────────────── */
-@media (max-width: 600px) {
-  .mapArea {
-    height: 280px;
-  }
-
-  .systemInfo {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-1);
-  }
 }
