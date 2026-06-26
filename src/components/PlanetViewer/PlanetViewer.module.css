@@ -1,0 +1,82 @@
+/* =============================================
+   PlanetViewer.module.css — Mesa Holográfica
+   ============================================= */
+
+.viewer {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-6);
+}
+
+/* ─── Mesa ───────────────────────────────────── */
+.table {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-10) var(--space-6) var(--space-8);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.1), transparent 60%),
+    linear-gradient(180deg, var(--color-bg-elevated), var(--color-bg-surface));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Brilho ascendente da projeção */
+.tableGlow {
+  position: absolute;
+  left: 50%;
+  bottom: -40%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, var(--color-cyan-glow), transparent 70%);
+  filter: blur(40px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* Grade de perspectiva (piso da mesa) */
+.tableGrid {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background-image:
+    linear-gradient(to right, rgba(0, 212, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 212, 255, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(360px) rotateX(60deg);
+  transform-origin: bottom;
+  opacity: 0.5;
+  z-index: -1;
+  mask-image: linear-gradient(to top, #000, transparent);
+  -webkit-mask-image: linear-gradient(to top, #000, transparent);
+}
+
+/* ─── Planetas projetados ────────────────────── */
+.nodes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+/* ─── Responsivo ─────────────────────────────── */
+@media (max-width: 860px) {
+  .viewer {
+    grid-template-columns: 1fr;
+  }
+}
