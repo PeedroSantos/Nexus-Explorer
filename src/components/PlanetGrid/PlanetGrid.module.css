@@ -1,0 +1,43 @@
+/* =============================================
+   PlanetGrid.module.css — grade responsiva
+   ============================================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+
+/* ─── Estado vazio ───────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  border: 1px dashed rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-lg);
+  background: rgba(0, 212, 255, 0.02);
+}
+
+.emptyIcon {
+  font-size: 2.6rem;
+  color: var(--color-cyan);
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.emptyNote {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
