@@ -1,0 +1,267 @@
+/* =============================================
+   Navbar.module.css — Barra de Navegação
+   ============================================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--navbar-height);
+  background: rgba(3, 3, 13, 0.7);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.navbarScrolled {
+  background: rgba(3, 3, 13, 0.92);
+  box-shadow: 0 1px 30px rgba(0, 212, 255, 0.08);
+}
+
+/* ─── Inner layout ───────────────────────────── */
+.inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* ─── Logotipo ───────────────────────────────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  font-size: 1.4rem;
+  color: var(--color-cyan);
+  filter: drop-shadow(0 0 8px var(--color-cyan));
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
+}
+
+.logoAccent {
+  color: var(--color-cyan);
+  margin-left: 3px;
+}
+
+/* ─── Nav links ──────────────────────────────── */
+.nav {
+  flex: 1;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  overflow: hidden;
+}
+
+.navLink:hover {
+  color: var(--color-text-primary);
+}
+
+/* Linha animada no hover/ativo */
+.navUnderline {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(to right, var(--color-cyan), var(--color-purple));
+  transition: transform var(--transition-fast);
+  transform-origin: center;
+}
+
+.navLink:hover .navUnderline {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.navLinkActive {
+  color: var(--color-cyan);
+}
+
+.navLinkActive .navUnderline {
+  transform: translateX(-50%) scaleX(1);
+  box-shadow: 0 0 8px var(--color-cyan);
+}
+
+/* ─── Badge de status ────────────────────────── */
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-cyan);
+  box-shadow: 0 0 6px var(--color-cyan);
+  animation: blink 2s ease-in-out infinite;
+}
+
+.statusText {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--color-cyan);
+  opacity: 0.8;
+}
+
+/* ─── Botão hambúrguer ───────────────────────── */
+.menuToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: var(--space-2);
+  background: var(--color-cyan-dim);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.menuToggle:hover {
+  background: rgba(0, 212, 255, 0.2);
+}
+
+.hamburgerLine {
+  display: block;
+  height: 1.5px;
+  background: var(--color-cyan);
+  border-radius: 1px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  transform-origin: center;
+}
+
+.menuToggleOpen .hamburgerLine:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.menuToggleOpen .hamburgerLine:nth-child(2) {
+  opacity: 0;
+}
+.menuToggleOpen .hamburgerLine:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ─── Menu mobile ────────────────────────────── */
+.mobileMenu {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  background: rgba(3, 3, 13, 0.97);
+  border-top: 1px solid var(--color-border);
+  transition: max-height var(--transition-normal);
+}
+
+.mobileMenuOpen {
+  max-height: 280px;
+}
+
+.mobileNavList {
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.mobileNavLink {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.mobileNavLink:hover {
+  color: var(--color-cyan);
+  background: var(--color-cyan-dim);
+}
+
+.mobileNavLinkActive {
+  color: var(--color-cyan);
+  background: var(--color-cyan-dim);
+}
+
+/* ─── Responsividade ─────────────────────────── */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  .statusBadge {
+    display: none;
+  }
+
+  .menuToggle {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+}
+
+/* ─── Animações ──────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}

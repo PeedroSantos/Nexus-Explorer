@@ -1,0 +1,224 @@
+/* =============================================
+   PlanetDetails.module.css
+   ============================================= */
+
+.page {
+  min-height: calc(100vh - var(--navbar-height));
+  padding-block: var(--space-10) var(--space-16);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+/* ─── Botão voltar ───────────────────────────── */
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--color-cyan);
+  background: var(--color-cyan-dim);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  margin-bottom: var(--space-8);
+}
+
+.backBtn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: var(--color-cyan);
+}
+
+/* ─── Cabeçalho ──────────────────────────────── */
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.planetId {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.idLabel {
+  color: var(--color-cyan);
+  opacity: 0.7;
+}
+
+.idValue {
+  color: var(--color-violet);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* ─── Divisor ────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--color-cyan), var(--color-purple), transparent);
+  opacity: 0.25;
+  margin-bottom: var(--space-10);
+}
+
+/* ─── Grid de conteúdo ───────────────────────── */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* ─── Painel visual ──────────────────────────── */
+.visualPanel {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-8));
+}
+
+.visualPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  aspect-ratio: 1;
+  background: var(--color-bg-card);
+  border: 1px dashed rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+}
+
+.planetPreview {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.planetOrb {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    #1a0a3d, #0d0531, #030110
+  );
+  border: 1.5px solid rgba(123, 47, 255, 0.4);
+  box-shadow:
+    inset -20px -15px 40px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(123, 47, 255, 0.2);
+  animation: rotatePlanet 20s linear infinite;
+}
+
+.visualNote {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-cyan);
+  opacity: 0.5;
+  margin: 0;
+}
+
+.visualSub {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ─── Painel de dados ────────────────────────── */
+.dataPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.dataSection {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.dataSectionTitle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--color-cyan);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-5) 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dataRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.dataRow:last-child {
+  border-bottom: none;
+}
+
+.dataLabel {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.dataValue {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.statusPlaceholder {
+  padding: var(--space-5);
+  border: 1px dashed rgba(123, 47, 255, 0.2);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.placeholderNote {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ─── Responsividade ─────────────────────────── */
+@media (max-width: 768px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .visualPanel {
+    position: static;
+  }
+}
+
+/* ─── Animações ──────────────────────────────── */
+@keyframes rotatePlanet {
+  from { filter: hue-rotate(0deg); }
+  to   { filter: hue-rotate(360deg); }
+}

@@ -1,0 +1,240 @@
+/* =============================================
+   Footer.module.css
+   ============================================= */
+
+.footer {
+  background: var(--color-bg-surface);
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+/* Linha neon no topo */
+.topBorder {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-purple) 30%,
+    var(--color-cyan) 70%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* ─── Grid principal ─────────────────────────── */
+.inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-12) var(--space-6);
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-12);
+}
+
+/* ─── Coluna: Marca ──────────────────────────── */
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.brandIcon {
+  font-size: 1.6rem;
+  color: var(--color-cyan);
+  filter: drop-shadow(0 0 8px var(--color-cyan));
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.brandAccent {
+  color: var(--color-cyan);
+  margin-left: 3px;
+}
+
+.brandTagline {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--color-purple);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.brandDescription {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 320px;
+  margin: 0;
+}
+
+/* ─── Título de seção ────────────────────────── */
+.sectionTitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--color-cyan);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-5) 0;
+}
+
+/* ─── Coluna: Links ──────────────────────────── */
+.linksSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--space-1) 0;
+  transition: color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-text-primary);
+}
+
+.linkActive {
+  color: var(--color-cyan);
+}
+
+.linkArrow {
+  color: var(--color-cyan);
+  opacity: 0.5;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: opacity var(--transition-fast);
+}
+
+.link:hover .linkArrow,
+.linkActive .linkArrow {
+  opacity: 1;
+}
+
+/* ─── Coluna: Stats ──────────────────────────── */
+.statsSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.statsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  color: var(--color-violet);
+  letter-spacing: 0.05em;
+}
+
+.statLabel {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Rodapé inferior ────────────────────────── */
+.bottom {
+  border-top: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.bottomInner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.copyright {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.coordinates {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.coordLabel {
+  color: var(--color-purple);
+  font-weight: 600;
+}
+
+.coordValue {
+  color: var(--color-text-muted);
+}
+
+/* ─── Responsividade ─────────────────────────── */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .bottomInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}

@@ -1,0 +1,133 @@
+/* =============================================
+   Explore.module.css
+   ============================================= */
+
+.page {
+  min-height: calc(100vh - var(--navbar-height));
+  padding-block: var(--space-12) var(--space-16);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+/* ─── Cabeçalho ──────────────────────────────── */
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-5) 0;
+}
+
+.breadcrumbSep {
+  color: var(--color-cyan);
+  opacity: 0.6;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ─── Divisor ────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--color-cyan), var(--color-purple), transparent);
+  opacity: 0.25;
+  margin-bottom: var(--space-8);
+}
+
+/* ─── Placeholder de filtros ─────────────────── */
+.filterPlaceholder {
+  padding: var(--space-6);
+  border: 1px dashed rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(0, 212, 255, 0.02);
+  margin-bottom: var(--space-8);
+  text-align: center;
+}
+
+.placeholderLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-cyan);
+  opacity: 0.6;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.placeholderNote {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ─── Grade de planetas ──────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-6);
+}
+
+/* ─── Placeholder de card ────────────────────── */
+.cardPlaceholder {
+  aspect-ratio: 3 / 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background: var(--color-bg-card);
+  border: 1px dashed rgba(123, 47, 255, 0.25);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast);
+}
+
+.cardPlaceholder:hover {
+  border-color: rgba(123, 47, 255, 0.5);
+}
+
+.cardPlaceholderIcon {
+  font-size: 2rem;
+  color: var(--color-purple);
+  opacity: 0.4;
+}
+
+.cardPlaceholderText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.cardPlaceholderNote {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}

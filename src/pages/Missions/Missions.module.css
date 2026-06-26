@@ -1,0 +1,253 @@
+/* =============================================
+   Missions.module.css
+   ============================================= */
+
+.page {
+  min-height: calc(100vh - var(--navbar-height));
+  padding-block: var(--space-12) var(--space-16);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+/* ─── Cabeçalho ──────────────────────────────── */
+.header {
+  margin-bottom: var(--space-8);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-5) 0;
+}
+
+.sep {
+  color: var(--color-cyan);
+  opacity: 0.6;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ─── Divisor ────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--color-cyan), var(--color-purple), transparent);
+  opacity: 0.25;
+  margin-bottom: var(--space-8);
+}
+
+/* ─── Barra de filtros ───────────────────────── */
+.filterBar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.filterBtn {
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.filterBtn:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
+}
+
+.filterBtnActive {
+  color: var(--color-cyan);
+  border-color: var(--color-cyan);
+  background: var(--color-cyan-dim);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.1);
+}
+
+/* ─── Indicador de filtro ────────────────────── */
+.filterIndicator {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-6) 0;
+}
+
+.filterIndicator strong {
+  color: var(--color-cyan);
+  font-weight: 600;
+}
+
+/* ─── Layout de conteúdo ─────────────────────── */
+.contentLayout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* ─── Título de painel ───────────────────────── */
+.panelTitle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--color-cyan);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* ─── Lista de missões ───────────────────────── */
+.missionList {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.listPlaceholder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.missionItemPlaceholder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+}
+
+.missionItemPlaceholder:hover {
+  border-color: var(--color-border);
+}
+
+.missionStatus {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-purple);
+  box-shadow: 0 0 8px var(--color-purple);
+  flex-shrink: 0;
+}
+
+.missionInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.missionName {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
+.missionPlanet {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.missionViewBtn {
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--color-cyan);
+  background: var(--color-cyan-dim);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.missionViewBtn:hover {
+  background: rgba(0, 212, 255, 0.2);
+}
+
+/* ─── Detalhe da missão ──────────────────────── */
+.missionDetail {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailPlaceholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  border: 1px dashed rgba(123, 47, 255, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  margin-top: var(--space-4);
+}
+
+.detailIcon {
+  font-size: 2.5rem;
+  color: var(--color-purple);
+  opacity: 0.3;
+}
+
+.detailNote {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.detailSub {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ─── Responsividade ─────────────────────────── */
+@media (max-width: 900px) {
+  .contentLayout {
+    grid-template-columns: 1fr;
+  }
+}
