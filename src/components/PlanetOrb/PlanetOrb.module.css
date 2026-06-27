@@ -1,0 +1,190 @@
+/* =============================================
+   PlanetOrb.module.css — planeta detalhado por tipo
+   ============================================= */
+
+.wrap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  isolation: isolate;
+}
+
+/* ─── Globo esférico ─────────────────────────── */
+.globe {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset -6px -8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.surface,
+.clouds,
+.shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+/* Sombreamento esférico: luz no topo-esquerdo, sombra embaixo-direita */
+.shade {
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.28) 0%, transparent 34%),
+    radial-gradient(circle at 70% 76%, rgba(0, 0, 0, 0.55) 0%, transparent 62%);
+}
+
+/* Camada de "nuvens"/manchas que gira lentamente (vida ao planeta) */
+.clouds {
+  animation: orbSpin 32s linear infinite;
+}
+
+/* ─── Atmosfera (halo) — cor pelo nível de perigo ─ */
+.atmosphere {
+  position: absolute;
+  width: 122%;
+  height: 122%;
+  border-radius: 50%;
+  filter: blur(7px);
+  opacity: 0.55;
+  z-index: -1;
+}
+
+.wrap[data-danger='Baixo']   .atmosphere { background: radial-gradient(circle, rgba(79, 224, 138, 0.6), transparent 70%); }
+.wrap[data-danger='Médio']   .atmosphere { background: radial-gradient(circle, rgba(255, 211, 111, 0.6), transparent 70%); }
+.wrap[data-danger='Alto']    .atmosphere { background: radial-gradient(circle, rgba(255, 155, 90, 0.65), transparent 70%); }
+.wrap[data-danger='Extremo'] .atmosphere {
+  background: radial-gradient(circle, rgba(255, 90, 108, 0.7), transparent 70%);
+  animation: atmoPulse 2.6s ease-in-out infinite;
+}
+
+/* ─── Anel planetário (gasoso) ───────────────── */
+.ring {
+  position: absolute;
+  width: 165%;
+  height: 165%;
+  border-radius: 50%;
+  border: 3px solid rgba(216, 196, 255, 0.55);
+  border-top-color: rgba(216, 196, 255, 0.15);
+  border-bottom-color: rgba(216, 196, 255, 0.15);
+  transform: rotateX(74deg) rotateZ(-18deg);
+  box-shadow: 0 0 14px rgba(155, 122, 232, 0.35);
+  z-index: -1;
+}
+
+/* =============================================
+   Superfícies por TIPO
+   ============================================= */
+
+/* ── Oceânico — nuvens brancas girando ───────── */
+.wrap[data-type='Oceânico'] .clouds {
+  background:
+    radial-gradient(ellipse 42% 16% at 30% 34%, rgba(255, 255, 255, 0.6), transparent 70%),
+    radial-gradient(ellipse 30% 13% at 66% 56%, rgba(255, 255, 255, 0.45), transparent 70%),
+    radial-gradient(ellipse 24% 10% at 48% 78%, rgba(255, 255, 255, 0.4), transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* ── Desértico — faixas de dunas ─────────────── */
+.wrap[data-type='Desértico'] .surface {
+  background: repeating-linear-gradient(
+    7deg,
+    rgba(120, 60, 20, 0) 0 5%,
+    rgba(80, 40, 12, 0.3) 5% 8%,
+    rgba(120, 60, 20, 0) 8% 13%
+  );
+  mix-blend-mode: multiply;
+}
+.wrap[data-type='Desértico'] .clouds {
+  background: radial-gradient(ellipse 60% 20% at 50% 30%, rgba(255, 220, 160, 0.25), transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* ── Gelado — gelo rachado + calotas + aurora ── */
+.wrap[data-type='Gelado'] .surface {
+  background:
+    linear-gradient(112deg, transparent 37%, rgba(255, 255, 255, 0.55) 38%, transparent 40%),
+    linear-gradient(58deg, transparent 54%, rgba(255, 255, 255, 0.45) 55%, transparent 57%),
+    radial-gradient(ellipse 72% 22% at 50% 5%, rgba(255, 255, 255, 0.75), transparent 70%),
+    radial-gradient(ellipse 72% 22% at 50% 97%, rgba(255, 255, 255, 0.65), transparent 70%);
+}
+.wrap[data-type='Gelado'] .clouds {
+  background: radial-gradient(ellipse 80% 30% at 50% 14%, rgba(120, 225, 255, 0.5), transparent 65%);
+  mix-blend-mode: screen;
+}
+
+/* ── Vulcânico — rachaduras de lava pulsando ─── */
+.wrap[data-type='Vulcânico'] .surface {
+  background:
+    linear-gradient(34deg,  transparent 45%, rgba(255, 130, 35, 0.95) 47%, transparent 50%),
+    linear-gradient(-22deg, transparent 59%, rgba(255, 80, 20, 0.85)  61%, transparent 64%),
+    linear-gradient(82deg,  transparent 29%, rgba(255, 160, 50, 0.8)  31%, transparent 34%),
+    linear-gradient(-60deg, transparent 70%, rgba(255, 110, 30, 0.8)  72%, transparent 75%);
+  filter: drop-shadow(0 0 3px rgba(255, 90, 20, 0.9));
+  animation: lavaGlow 3s ease-in-out infinite;
+}
+
+/* ── Florestal — continentes verdes + nuvens ── */
+.wrap[data-type='Florestal'] .surface {
+  background:
+    radial-gradient(ellipse 32% 22% at 34% 40%, rgba(18, 78, 30, 0.65), transparent 70%),
+    radial-gradient(ellipse 26% 18% at 66% 60%, rgba(14, 68, 24, 0.6), transparent 70%),
+    radial-gradient(ellipse 20% 14% at 50% 82%, rgba(24, 90, 36, 0.55), transparent 70%);
+  mix-blend-mode: multiply;
+}
+.wrap[data-type='Florestal'] .clouds {
+  background:
+    radial-gradient(ellipse 36% 12% at 40% 30%, rgba(255, 255, 255, 0.4), transparent 70%),
+    radial-gradient(ellipse 28% 10% at 62% 66%, rgba(255, 255, 255, 0.3), transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* ── Gasoso — faixas de tempestade + grande mancha ─ */
+.wrap[data-type='Gasoso'] .surface {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.12) 0 6%,
+    rgba(0, 0, 0, 0.14) 6% 13%
+  );
+  mix-blend-mode: overlay;
+}
+.wrap[data-type='Gasoso'] .clouds {
+  background: radial-gradient(ellipse 24% 13% at 62% 60%, rgba(255, 120, 80, 0.6), transparent 70%);
+  mix-blend-mode: screen;
+}
+
+/* ── Rochoso — crateras ──────────────────────── */
+.wrap[data-type='Rochoso'] .surface {
+  background:
+    radial-gradient(circle at 35% 40%, rgba(0, 0, 0, 0.45) 0 4%, transparent 6%),
+    radial-gradient(circle at 60% 30%, rgba(0, 0, 0, 0.4) 0 3%, transparent 5%),
+    radial-gradient(circle at 56% 66%, rgba(0, 0, 0, 0.45) 0 5%, transparent 7%),
+    radial-gradient(circle at 30% 70%, rgba(0, 0, 0, 0.35) 0 3%, transparent 5%),
+    radial-gradient(circle at 73% 56%, rgba(0, 0, 0, 0.35) 0 2.5%, transparent 4%);
+}
+
+/* ── Sombrio — quase escuro, com leve luz de borda ─ */
+.wrap[data-type='Sombrio'] .surface {
+  background: radial-gradient(circle at 32% 30%, transparent 50%, rgba(0, 0, 0, 0.82) 100%);
+}
+.wrap[data-type='Sombrio'] .shade {
+  background:
+    radial-gradient(circle at 26% 26%, rgba(120, 140, 255, 0.5) 0%, transparent 24%),
+    radial-gradient(circle at 72% 74%, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+}
+
+/* ─── Animações ──────────────────────────────── */
+@keyframes orbSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes lavaGlow {
+  0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 2px rgba(255, 90, 20, 0.7)); }
+  50%      { opacity: 1;   filter: drop-shadow(0 0 6px rgba(255, 120, 40, 1)); }
+}
+
+@keyframes atmoPulse {
+  0%, 100% { opacity: 0.5;  transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.06); }
+}

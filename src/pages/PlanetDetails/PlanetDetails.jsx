@@ -1,26 +1,51 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
+import { planets } from '../../data/planets'
+import PlanetOrb from '../../components/PlanetOrb/PlanetOrb'
 import styles from './PlanetDetails.module.css'
 
 /*
   Página de Detalhes do Planeta.
 
-  INTEGRAÇÃO FUTURA:
-  - Use useParams() para capturar o `id` da rota "/explorar/:id"
-  - Faça a busca nos dados mockados pelo id: planets.find(p => p.id === id)
-  - Aplique renderização condicional:
-      if (!planet) return <NotFound />
-  - Use useNavigate() para o botão "Voltar"
-  - Props desestruturadas nos sub-componentes de detalhe
-
-  Exemplo:
-  const { id } = useParams()
-  const planet = planets.find(p => p.id === id)
+  - useParams() captura o `id` da rota "/explorar/:id".
+  - Busca o planeta nos dados mockados (planets.find).
+  - Renderização condicional: se não encontrar, mostra estado "não encontrado".
+  - useNavigate() no botão "Voltar".
 */
 function PlanetDetails() {
   const { id }   = useParams()
   const navigate = useNavigate()
+  const planet   = planets.find(p => p.id === id)
 
   const handleBack = () => navigate('/explorar')
+
+  // Planeta inexistente → renderização condicional
+  if (!planet) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.inner}>
+          <button className={styles.backBtn} onClick={handleBack} aria-label="Voltar ao catálogo">
+            <span aria-hidden="true">←</span> Voltar ao Catálogo
+          </button>
+          <div className={styles.notFound} role="status">
+            <span className={styles.notFoundIcon} aria-hidden="true">◌</span>
+            <h1 className={styles.notFoundTitle}>Planeta não encontrado</h1>
+            <p className={styles.notFoundNote}>
+              O mundo <strong>{id}</strong> não consta no catálogo da frota Nexus.
+            </p>
+            <Link to="/explorar" className={styles.notFoundLink}>Ver catálogo completo</Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const { name, type, danger, temperature, atmosphere, description, resources } = planet
+
+  const generalData = [
+    { label: 'Tipo',           value: type },
+    { label: 'Temperatura',    value: temperature },
+    { label: 'Atmosfera',      value: atmosphere },
+  ]
 
   return (
     <div className={styles.page}>
@@ -38,61 +63,57 @@ function PlanetDetails() {
 
         {/* Cabeçalho com ID do planeta */}
         <header className={styles.header}>
-          <p className={styles.planetId} aria-label={`ID do planeta: ${id || 'não definido'}`}>
+          <p className={styles.planetId} aria-label={`ID do planeta: ${id}`}>
             <span className={styles.idLabel}>ID</span>
-            <span className={styles.idValue}>{id ?? '---'}</span>
+            <span className={styles.idValue}>{id}</span>
           </p>
-          <h1 className={styles.title}>Dados do Planeta</h1>
+          <h1 className={styles.title}>{name}</h1>
         </header>
 
         <div className={styles.divider} aria-hidden="true" />
 
-        {/* ── ÁREA DE CONTEÚDO ─────────────────────────────────────
-            Substitua este bloco pelo conteúdo real do planeta:
-            - Visualização do planeta (imagem ou componente holográfico)
-            - Dados atmosféricos, gravitacionais, de temperatura
-            - Lista de missões associadas ao planeta
-            - Componente criativo (ex: HolographicViewer)
-        ──────────────────────────────────────────────────────── */}
         <div className={styles.contentGrid}>
 
           {/* Visão do planeta */}
           <div className={styles.visualPanel}>
-            <div className={styles.visualPlaceholder}>
-              <div className={styles.planetPreview} aria-hidden="true">
-                <div className={styles.planetOrb} />
-              </div>
-              <p className={styles.visualNote}>Visualização do planeta aqui</p>
-              <p className={styles.visualSub}>Componente holográfico / imagem</p>
+            <div className={styles.visualCard}>
+              <PlanetOrb planet={planet} size={210} />
+              <p className={styles.visualName}>{name}</p>
+              <span className={styles.visualType}>{type}</span>
             </div>
           </div>
 
           {/* Dados do planeta */}
           <div className={styles.dataPanel}>
+
             <div className={styles.dataSection}>
               <h2 className={styles.dataSectionTitle}>Dados Gerais</h2>
-              {[
-                { label: 'Tipo',        value: '---' },
-                { label: 'Diâmetro',    value: '---' },
-                { label: 'Temperatura', value: '---' },
-                { label: 'Atmosfera',   value: '---' },
-                { label: 'Luas',        value: '---' },
-              ].map(({ label, value }) => (
+              {generalData.map(({ label, value }) => (
                 <div key={label} className={styles.dataRow}>
                   <span className={styles.dataLabel}>{label}</span>
                   <span className={styles.dataValue}>{value}</span>
                 </div>
               ))}
+              <div className={styles.dataRow}>
+                <span className={styles.dataLabel}>Nível de perigo</span>
+                <span className={styles.dangerValue} data-danger={danger}>{danger}</span>
+              </div>
             </div>
 
             <div className={styles.dataSection}>
-              <h2 className={styles.dataSectionTitle}>Status de Exploração</h2>
-              <div className={styles.statusPlaceholder}>
-                <p className={styles.placeholderNote}>
-                  Missões e status de exploração virão aqui.
-                </p>
-              </div>
+              <h2 className={styles.dataSectionTitle}>Relatório de Exploração</h2>
+              <p className={styles.description}>{description}</p>
             </div>
+
+            <div className={styles.dataSection}>
+              <h2 className={styles.dataSectionTitle}>Recursos Catalogados</h2>
+              <ul className={styles.resourceList}>
+                {resources.map(resource => (
+                  <li key={resource} className={styles.resourceTag}>{resource}</li>
+                ))}
+              </ul>
+            </div>
+
           </div>
 
         </div>

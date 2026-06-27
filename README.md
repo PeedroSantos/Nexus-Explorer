@@ -41,13 +41,13 @@ A aplicação simula um Centro de Exploração Planetária, onde usuários podem
 ## ✨ Principais Funcionalidades
 
 - Navegação SPA entre 5 páginas sem recarregamento
-- Catálogo de planetas fictícios com cards interativos
-- Sistema de filtros com Lift State Up
-- Centro de missões com status e detalhes
-- Atlas estelar com mapa galáctico por quadrantes
-- Navbar responsiva com mobile menu
-- Componente holográfico criativo (componente autoral)
-- Visual temático espacial com animações CSS
+- Catálogo de planetas com busca, filtro por tipo (Lift State Up) e cards interativos
+- Página de detalhes do planeta via rota dinâmica (`/explorar/:id`)
+- Planetas renderizados com superfície única por tipo (lava, gelo, gás, crateras, etc.)
+- Centro de missões: marcar como concluída, filtro por status e barra de progresso
+- Atlas estelar com mapa orbital interativo (planetas em órbita ao redor de uma anã branca)
+- Mapa: hover inspeciona o planeta e o clique fixa as informações, que acompanham o planeta em movimento
+- Navbar responsiva com menu mobile e visual temático espacial com animações CSS
 
 ---
 
@@ -58,30 +58,28 @@ nexus-explorer/
 ├── public/
 │   └── favicon.svg
 ├── src/
-│   ├── assets/              # Imagens, ícones e mídias
 │   ├── components/
-│   │   ├── Navbar/
-│   │   │   ├── Navbar.jsx
-│   │   │   └── Navbar.module.css
-│   │   └── Footer/
-│   │       ├── Footer.jsx
-│   │       └── Footer.module.css
+│   │   ├── Navbar/            # barra de navegação (NavLink + menu mobile)
+│   │   ├── Footer/
+│   │   ├── PlanetOrb/         # orbe planetário único por tipo (reutilizável)
+│   │   ├── PlanetCard/        # card do catálogo (Explorar)
+│   │   ├── PlanetGrid/        # grade de cards
+│   │   ├── PlanetSearch/      # campo de busca
+│   │   ├── PlanetFilter/      # chips de filtro por tipo
+│   │   ├── MissionCard/       # card de missão
+│   │   ├── MissionList/       # lista de missões
+│   │   ├── AtlasCard/         # cartão de info que acompanha o planeta no mapa
+│   │   ├── AtlasFilter/       # busca + filtro por categoria do Atlas
+│   │   └── StarMap/           # mapa estelar orbital (componente criativo)
 │   ├── pages/
 │   │   ├── Home/
-│   │   │   ├── Home.jsx
-│   │   │   └── Home.module.css
 │   │   ├── Explore/
-│   │   │   ├── Explore.jsx
-│   │   │   └── Explore.module.css
 │   │   ├── PlanetDetails/
-│   │   │   ├── PlanetDetails.jsx
-│   │   │   └── PlanetDetails.module.css
 │   │   ├── Missions/
-│   │   │   ├── Missions.jsx
-│   │   │   └── Missions.module.css
 │   │   └── Atlas/
-│   │       ├── Atlas.jsx
-│   │       └── Atlas.module.css
+│   ├── data/
+│   │   ├── planets.js         # mock dos planetas
+│   │   └── missions.js        # mock das missões
 │   ├── routes/
 │   │   └── AppRoutes.jsx
 │   ├── styles/
@@ -94,6 +92,8 @@ nexus-explorer/
 └── README.md
 ```
 
+> Cada componente e página possui seu próprio arquivo `.module.css` ao lado do `.jsx`.
+
 ---
 
 ## ⚙️ Passos para Instalação
@@ -102,10 +102,10 @@ nexus-explorer/
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/nexus-explorer.git
+git clone https://github.com/PeedroSantos/Nexus-Explorer.git
 
 # 2. Acesse a pasta do projeto
-cd nexus-explorer
+cd Nexus-Explorer
 
 # 3. Instale as dependências
 npm install
@@ -134,26 +134,26 @@ npm run preview
 
 ## 🔗 Link do Repositório
 
-[https://github.com/seu-usuario/nexus-explorer](https://github.com/seu-usuario/nexus-explorer)
+[https://github.com/PeedroSantos/Nexus-Explorer](https://github.com/PeedroSantos/Nexus-Explorer)
 
 ---
 
 ## 🎨 Componente Criativo
 
-### HolographicPlanetViewer
+### StarMap — Mapa Estelar Orbital
 
-**Localização:** `src/components/HolographicPlanetViewer/`
+**Localização:** `src/components/StarMap/` (utilizado na página Atlas Estelar)
 
 **Descrição:**  
-Componente visual interativo que exibe um planeta 3D holográfico com anéis orbitais animados, camadas atmosféricas e partículas flutuantes. O usuário pode interagir com o planeta via hover e clique para ver diferentes camadas e dados do astro projetados como holograma.
+Mapa interativo da galáxia Nexus: uma **anã branca** central e anéis orbitais concêntricos onde os planetas **orbitam continuamente**. A distância de cada planeta ao sol é ordenada pela sua **temperatura** (mundos mais quentes orbitam mais perto), e cada planeta tem **velocidade e sentido de órbita próprios**, então nenhum se move igual ao outro.
 
 **Interações:**
-- `onMouseEnter`: Revela camadas atmosféricas e expande os anéis
-- `onClick`: Projeta dados do planeta em forma de painel holográfico
-- `onMouseLeave`: Retorna ao estado de repouso com animação suave
+- `onMouseEnter`: ao passar o mouse, projeta um cartão com os dados do planeta
+- `onClick`: fixa o cartão (pinned); ele permanece visível e **acompanha o planeta enquanto ele orbita**
+- `onClick` novamente: solta o cartão fixado
 
 **Originalidade:**  
-Vai além de um simples card — simula uma projeção holográfica 3D usando apenas CSS transforms, gradients e animações, sem bibliotecas externas. A identidade visual é totalmente coerente com o tema espacial do Nexus Explorer.
+Vai muito além de um card ou grade comum — recria um "orrery" (mapa orbital) animado usando apenas React + CSS (transforms, animações e contra-rotação para manter os cartões legíveis durante o movimento), sem bibliotecas externas. Cada planeta ainda é desenhado com superfície própria por tipo (lava, gelo, faixas de gás, crateras, etc.), reforçando a identidade espacial do Nexus Explorer.
 
 ---
 
@@ -162,15 +162,16 @@ Vai além de um simples card — simula uma projeção holográfica 3D usando ap
 | Conceito | Onde foi aplicado |
 |----------|-------------------|
 | React Router DOM | `AppRoutes.jsx` — BrowserRouter, Routes, Route |
-| NavLink | `Navbar.jsx` — navegação principal com classe ativa |
-| useNavigate | `Home.jsx`, `Missions.jsx` — botões de navegação |
-| useParams | `PlanetDetails.jsx` — captura do id do planeta |
-| Lift State Up | `Missions.jsx` + `Atlas.jsx` — filtros gerenciados na página pai |
-| Props desestruturadas | `PlanetCard`, `MissionCard` — componentes filhos |
-| Dados mockados | `src/data/` — arrays de planetas e missões |
+| NavLink / Link | `Navbar.jsx` (navegação principal), `PlanetCard.jsx` (link para o detalhe) |
+| useNavigate | `Home.jsx` — botão "Iniciar Exploração" e cards de módulo |
+| useParams | `PlanetDetails.jsx` — captura do id do planeta na rota `/explorar/:id` |
+| Lift State Up | `Explore.jsx`, `Missions.jsx` e `Atlas.jsx` — busca/filtros geridos na página pai |
+| Props desestruturadas | `PlanetCard`, `MissionCard`, `AtlasCard`, `PlanetOrb` — componentes filhos |
+| Dados mockados | `src/data/planets.js` e `src/data/missions.js` |
 | CSS Modules | Todos os componentes e páginas |
-| Renderização condicional | Filtro ativo, planeta não encontrado, missão selecionada |
-| Eventos | onClick, onMouseEnter, onChange nos componentes |
+| Renderização condicional | Planeta não encontrado, lista/grade vazia, missão concluída vs. botão |
+| Eventos | onClick, onMouseEnter, onMouseLeave, onChange nos componentes |
+| Componente criativo | `StarMap.jsx` — mapa orbital interativo (ver seção acima) |
 
 ---
 

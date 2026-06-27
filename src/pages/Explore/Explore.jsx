@@ -3,7 +3,6 @@ import { planets, planetTypes } from '../../data/planets'
 import PlanetSearch from '../../components/PlanetSearch/PlanetSearch'
 import PlanetFilter from '../../components/PlanetFilter/PlanetFilter'
 import PlanetGrid from '../../components/PlanetGrid/PlanetGrid'
-import PlanetViewer from '../../components/PlanetViewer/PlanetViewer'
 import styles from './Explore.module.css'
 
 /*
@@ -13,9 +12,6 @@ import styles from './Explore.module.css'
   gerenciados aqui e passados via props para PlanetSearch,
   PlanetFilter e PlanetGrid. A lista visível é derivada
   desses estados (busca por nome + filtro por tipo).
-
-  A Mesa Holográfica Interativa (PlanetViewer) reaproveita
-  os mesmos dados mockados para projetar os planetas.
 */
 function Explore() {
   const [query, setQuery]           = useState('')
@@ -65,19 +61,6 @@ function Explore() {
 
         {/* ── GRADE DE PLANETAS ───────────────────────────────── */}
         <PlanetGrid planets={visiblePlanets} />
-
-        {/* ── MESA HOLOGRÁFICA INTERATIVA ─────────────────────────
-            Componente criativo principal. Reaproveita o catálogo
-            completo para projetar os planetas. */}
-        <section className={styles.hologramSection} aria-label="Mesa Holográfica Interativa">
-          <div className={styles.sectionHead}>
-            <h2 className={styles.sectionTitle}>Mesa Holográfica</h2>
-            <p className={styles.sectionSubtitle}>
-              Projete qualquer mundo do catálogo e inspecione seus dados em tempo real.
-            </p>
-          </div>
-          <PlanetViewer planets={planets} />
-        </section>
 
       </div>
     </div>

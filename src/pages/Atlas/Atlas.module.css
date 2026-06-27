@@ -69,13 +69,6 @@
   margin: 0 0 var(--space-6) 0;
 }
 
-/* ─── Grade de planetas ──────────────────────── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--space-6);
-}
-
 /* ─── Estado vazio ───────────────────────────── */
 .empty {
   display: flex;

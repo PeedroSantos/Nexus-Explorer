@@ -76,27 +76,3 @@
   color: var(--color-text-muted);
   margin: 0 0 var(--space-6) 0;
 }
-
-/* ─── Seção da Mesa Holográfica ──────────────── */
-.hologramSection {
-  margin-top: var(--space-20);
-}
-
-.sectionHead {
-  margin-bottom: var(--space-8);
-}
-
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-2) 0;
-}
-
-.sectionSubtitle {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  margin: 0;
-}

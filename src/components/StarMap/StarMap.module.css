@@ -1,0 +1,219 @@
+/* =============================================
+   StarMap.module.css — mapa estelar orbital
+   ============================================= */
+
+.map {
+  position: relative;
+  height: 640px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(123, 47, 255, 0.12), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.06), transparent 70%),
+    linear-gradient(180deg, var(--color-bg-elevated), var(--color-bg-deep));
+}
+
+/* ─── Estrelas de fundo ──────────────────────── */
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* ─── Campo orbital ──────────────────────────── */
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ─── Anéis orbitais ─────────────────────────── */
+.orbitRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 212, 255, 0.18);
+  pointer-events: none;
+}
+
+.orbitRing[data-accent='purple'] {
+  border-color: rgba(123, 47, 255, 0.2);
+}
+
+/* ─── Astro central ──────────────────────────── */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  z-index: 2;
+}
+
+/* Anã branca — núcleo branco com tom azulado */
+.centerCore {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 36%, #ffffff 0%, #d8f3ff 32%, #8fccff 64%, #3f7fd6 100%);
+  box-shadow:
+    0 0 26px rgba(150, 210, 255, 0.9),
+    0 0 64px rgba(90, 160, 255, 0.55),
+    inset -4px -6px 14px rgba(30, 70, 140, 0.5);
+  animation: corePulse 4s ease-in-out infinite;
+}
+
+.centerGlow {
+  position: absolute;
+  width: 260%;
+  height: 260%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 190, 255, 0.4), transparent 65%);
+  filter: blur(14px);
+  z-index: -1;
+}
+
+/* ─── Órbita (gira em torno do centro) ───────── */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: orbitCW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.orbit[data-dir='ccw'] {
+  animation-name: orbitCCW;
+}
+
+/* Satélite no topo da órbita — contra-rotação mantém tudo na vertical */
+.satellite {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: counterCW;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+}
+
+.satellite[data-dir='ccw'] {
+  animation-name: counterCCW;
+}
+
+.satelliteOpen {
+  z-index: 20;
+}
+
+/* ─── Botão do planeta ───────────────────────── */
+.planetBtn {
+  pointer-events: auto;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.planetBtn:hover,
+.planetBtnActive {
+  transform: scale(1.18);
+}
+
+/* ─── Cartão de informações (acompanha o planeta) ─ */
+.info {
+  pointer-events: auto;
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 220px;
+  z-index: 21;
+  animation: infoIn var(--transition-fast) ease;
+}
+
+.info[data-pinned='true'] {
+  filter: drop-shadow(0 0 10px var(--color-cyan-glow));
+}
+
+/* ─── Dica de uso ────────────────────────────── */
+.hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-4);
+  z-index: 5;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin: 0;
+  padding-inline: var(--space-4);
+}
+
+/* ─── Animações ──────────────────────────────── */
+/* Sentido horário */
+@keyframes orbitCW {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes counterCW {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+/* Sentido anti-horário */
+@keyframes orbitCCW {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+@keyframes counterCCW {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes corePulse {
+  0%, 100% { box-shadow: 0 0 26px rgba(150, 210, 255, 0.9), 0 0 64px rgba(90, 160, 255, 0.55), inset -4px -6px 14px rgba(30, 70, 140, 0.5); }
+  50%      { box-shadow: 0 0 38px rgba(180, 225, 255, 1), 0 0 88px rgba(90, 160, 255, 0.7), inset -4px -6px 14px rgba(30, 70, 140, 0.5); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.9; }
+}
+
+@keyframes infoIn {
+  from { opacity: 0; transform: translateY(-50%) scale(0.96); }
+  to   { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+/* ─── Responsivo ─────────────────────────────── */
+@media (max-width: 720px) {
+  .map { height: 460px; }
+  .field { transform: scale(0.62); transform-origin: center; }
+}

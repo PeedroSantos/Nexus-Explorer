@@ -1,20 +1,23 @@
 import { Link } from 'react-router-dom'
+import PlanetOrb from '../PlanetOrb/PlanetOrb'
 import styles from './PlanetCard.module.css'
 
 /*
   PlanetCard — cartão holográfico de um planeta.
   Props desestruturadas diretamente do objeto `planet`.
   O nível de perigo controla a cor do selo via data-attribute.
+  O orbe único do planeta é renderizado pelo componente PlanetOrb.
 */
 function PlanetCard({ planet }) {
-  const { id, name, type, danger, temperature, image, description } = planet
+  const { id, name, type, danger, temperature, description } = planet
 
   return (
     <Link to={`/explorar/${id}`} className={styles.card} aria-label={`Ver detalhes de ${name}`}>
-      {/* Orbe do planeta (gradiente vindo dos dados) */}
+      {/* Orbe único do planeta (superfície por tipo) */}
       <div className={styles.orbWrap} aria-hidden="true">
-        <div className={styles.orb} style={{ background: image }} />
-        <div className={styles.orbGlow} style={{ background: image }} />
+        <div className={styles.orbHolder}>
+          <PlanetOrb planet={planet} size={112} />
+        </div>
       </div>
 
       <div className={styles.body}>
