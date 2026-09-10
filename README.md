@@ -1,7 +1,8 @@
 # ◈ Nexus Explorer
 
 > Centro de Exploração Planetária Interestelar
-n**Demo ao vivo:** https://peedrosantos.github.io/Nexus-Explorer/
+
+**Demo ao vivo:** https://peedrosantos.github.io/Nexus-Explorer/
 
 ---
 
